@@ -11,8 +11,8 @@ const streamSizeList =
     { width: 640, height: 360 },
     { width: 1280, height: 720 },
     { width: 1920, height: 1080 },
-    { width: 2560, height: 1440 },
-    { width: 3840, height: 2160 },
+    // { width: 2560, height: 1440 },
+    // { width: 3840, height: 2160 },
     // { width: 360, height: 640 },
     // { width: 720, height: 1280 },
     // { width: 1080, height: 1920 },
@@ -36,7 +36,7 @@ const codecPreferences = document.getElementById('codecPreferences');
 const supportsSetCodecPreferences = window.RTCRtpTransceiver &&
   'setCodecPreferences' in window.RTCRtpTransceiver.prototype;
 const messageDiv = document.getElementById('message');
-messageDiv.style.display = 'none';
+// messageDiv.style.display = 'none';
 
 let useCustomResolution = false;
 
@@ -80,11 +80,11 @@ async function setupConfig() {
 // }
 
 async function startVideo() {
-  videoSelect.disabled = true;
-  audioSelect.disabled = true;
+  // videoSelect.disabled = true;
+  // audioSelect.disabled = true;
   videoResolutionSelect.disabled = true;
-  cameraWidthInput.disabled = true;
-  cameraHeightInput.disabled = true;
+  // cameraWidthInput.disabled = true;
+  // cameraHeightInput.disabled = true;
   startButton.disabled = true;
 
   let width = 0;
@@ -98,7 +98,8 @@ async function startVideo() {
     height = size.height;
   }
 
-  await sendVideo.startLocalVideo(videoSelect.value, audioSelect.value, width, height);
+  // await sendVideo.startLocalVideo(videoSelect.value, audioSelect.value, width, height);
+  await sendVideo.startLocalVideo(null, null, width, height);
 
   // enable setup button after initializing local video.
   setupButton.disabled = false;
@@ -160,15 +161,15 @@ function setCodecPreferences() {
 
 async function hangUp() {
   clearStatsMessage();
-  messageDiv.style.display = 'block';
-  messageDiv.innerText = `Disconnect peer on ${connectionId}.`;
+  // messageDiv.style.display = 'block';
+  // messageDiv.innerText = `Disconnect peer on ${connectionId}.`;
 
   hangUpButton.disabled = true;
   setupButton.disabled = false;
   await renderstreaming.deleteConnection();
   await renderstreaming.stop();
   renderstreaming = null;
-  remoteVideo.srcObject = null;
+  // remoteVideo.srcObject = null;
 
   textForConnectionId.value = getRandom();
   connectionId = null;
@@ -185,8 +186,7 @@ function getRandom() {
 }
 
 async function setUpInputSelect() {
-  const deviceInfos = await navigator.mediaDevices.enumerateDevices();
-
+  // const deviceInfos = await navigator.mediaDevices.enumerateDevices();
   // for (let i = 0; i !== deviceInfos.length; ++i) {
   //   const deviceInfo = deviceInfos[i];
   //   if (deviceInfo.kind === 'videoinput') {
@@ -255,9 +255,9 @@ function showStatsMessage() {
     if (localVideo.videoWidth) {
       localVideoStatsDiv.innerHTML = `<strong>Sending resolution:</strong> ${localVideo.videoWidth} x ${localVideo.videoHeight} px`;
     }
-    if (remoteVideo.videoWidth) {
-      remoteVideoStatsDiv.innerHTML = `<strong>Receiving resolution:</strong> ${remoteVideo.videoWidth} x ${remoteVideo.videoHeight} px`;
-    }
+    // if (remoteVideo.videoWidth) {
+    //   remoteVideoStatsDiv.innerHTML = `<strong>Receiving resolution:</strong> ${remoteVideo.videoWidth} x ${remoteVideo.videoHeight} px`;
+    // }
 
     if (renderstreaming == null || connectionId == null) {
       return;
@@ -268,12 +268,12 @@ function showStatsMessage() {
       return;
     }
 
-    const array = createDisplayStringArray(stats, lastStats);
-    if (array.length) {
-      messageDiv.style.display = 'block';
-      messageDiv.innerHTML = array.join('<br>');
-    }
-    lastStats = stats;
+    // const array = createDisplayStringArray(stats, lastStats);
+    // if (array.length) {
+    //   messageDiv.style.display = 'block';
+    //   messageDiv.innerHTML = array.join('<br>');
+    // }
+    // lastStats = stats;
   }, 1000);
 }
 
@@ -284,7 +284,7 @@ function clearStatsMessage() {
   lastStats = null;
   intervalId = null;
   localVideoStatsDiv.innerHTML = '';
-  remoteVideoStatsDiv.innerHTML = '';
-  messageDiv.style.display = 'none';
-  messageDiv.innerHTML = '';
+  // remoteVideoStatsDiv.innerHTML = '';
+  // messageDiv.style.display = 'none';
+  // messageDiv.innerHTML = '';
 }

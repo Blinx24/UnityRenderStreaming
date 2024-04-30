@@ -1,3 +1,7 @@
+body {
+  margin-top: -30px;
+}
+
 div#select, div#resolution {
   margin: 1em;
 }
@@ -30,10 +34,6 @@ div#preview>div {
   vertical-align: top;
   width: 100%;
   height: auto;
-}
-
-div#connectionId {
-  margin: 1em;
 }
 
 h2 {
