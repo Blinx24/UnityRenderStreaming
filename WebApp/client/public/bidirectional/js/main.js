@@ -13,11 +13,11 @@ const streamSizeList =
     { width: 1920, height: 1080 },
     { width: 2560, height: 1440 },
     { width: 3840, height: 2160 },
-    { width: 360, height: 640 },
-    { width: 720, height: 1280 },
-    { width: 1080, height: 1920 },
-    { width: 1440, height: 2560 },
-    { width: 2160, height: 3840 },
+    // { width: 360, height: 640 },
+    // { width: 720, height: 1280 },
+    // { width: 1080, height: 1920 },
+    // { width: 1440, height: 2560 },
+    // { width: 2160, height: 3840 },
   ];
 
 const localVideo = document.getElementById('localVideo');
@@ -68,16 +68,16 @@ setupConfig();
 async function setupConfig() {
   const res = await getServerConfig();
   useWebSocket = res.useWebSocket;
-  showWarningIfNeeded(res.startupMode);
+  // showWarningIfNeeded(res.startupMode);
 }
 
-function showWarningIfNeeded(startupMode) {
-  const warningDiv = document.getElementById("warning");
-  if (startupMode == "public") {
-    warningDiv.innerHTML = "<h4>Warning</h4> This sample is not working on Public Mode.";
-    warningDiv.hidden = false;
-  }
-}
+// function showWarningIfNeeded(startupMode) {
+//   const warningDiv = document.getElementById("warning");
+//   if (startupMode == "public") {
+//     warningDiv.innerHTML = "<h4>Warning</h4> This sample is not working on Public Mode.";
+//     warningDiv.hidden = false;
+//   }
+// }
 
 async function startVideo() {
   videoSelect.disabled = true;
@@ -187,20 +187,20 @@ function getRandom() {
 async function setUpInputSelect() {
   const deviceInfos = await navigator.mediaDevices.enumerateDevices();
 
-  for (let i = 0; i !== deviceInfos.length; ++i) {
-    const deviceInfo = deviceInfos[i];
-    if (deviceInfo.kind === 'videoinput') {
-      const option = document.createElement('option');
-      option.value = deviceInfo.deviceId;
-      option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
-      videoSelect.appendChild(option);
-    } else if (deviceInfo.kind === 'audioinput') {
-      const option = document.createElement('option');
-      option.value = deviceInfo.deviceId;
-      option.text = deviceInfo.label || `mic ${audioSelect.length + 1}`;
-      audioSelect.appendChild(option);
-    }
-  }
+  // for (let i = 0; i !== deviceInfos.length; ++i) {
+  //   const deviceInfo = deviceInfos[i];
+  //   if (deviceInfo.kind === 'videoinput') {
+  //     const option = document.createElement('option');
+  //     option.value = deviceInfo.deviceId;
+  //     option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
+  //     videoSelect.appendChild(option);
+  //   } else if (deviceInfo.kind === 'audioinput') {
+  //     const option = document.createElement('option');
+  //     option.value = deviceInfo.deviceId;
+  //     option.text = deviceInfo.label || `mic ${audioSelect.length + 1}`;
+  //     audioSelect.appendChild(option);
+  //   }
+  // }
 
   for (let i = 0; i < streamSizeList.length; i++) {
     const streamSize = streamSizeList[i];
@@ -210,18 +210,21 @@ async function setUpInputSelect() {
     videoResolutionSelect.appendChild(option);
   }
 
-  const option = document.createElement('option');
-  option.value = streamSizeList.length;
-  option.text = 'Custom';
-  videoResolutionSelect.appendChild(option);
-  videoResolutionSelect.value = 1; // default select index (1280 x 720)
+  // Add custom resolution compability
+  // const option = document.createElement('option');
+  // option.value = streamSizeList.length;
+  // option.text = 'Custom';
+  // videoResolutionSelect.appendChild(option);
 
-  videoResolutionSelect.addEventListener('change', (event) => {
-    const isCustom = event.target.value >= streamSizeList.length;
-    cameraWidthInput.disabled = !isCustom;
-    cameraHeightInput.disabled = !isCustom;
-    useCustomResolution = isCustom;
-  });
+  // videoResolutionSelect.addEventListener('change', (event) => {
+  //   const isCustom = event.target.value >= streamSizeList.length;
+  //   cameraWidthInput.disabled = !isCustom;
+  //   cameraHeightInput.disabled = !isCustom;
+  //   useCustomResolution = isCustom;
+  // });
+
+  // Set default value
+  videoResolutionSelect.value = 1; // default select index (1280 x 720)
 }
 
 function showCodecSelect() {
