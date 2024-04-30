@@ -14,19 +14,27 @@ export class SendVideo {
    */
   async startLocalVideo(videoSource, audioSource, videoWidth, videoHeight) {
     try {
-      const constraints = {
-        video: { deviceId: videoSource ? { exact: videoSource } : undefined },
-        audio: { deviceId: audioSource ? { exact: audioSource } : undefined }
-      };
-
-      if (videoWidth != null || videoWidth != 0) {
-        constraints.video.width = videoWidth;
-      }
-      if (videoHeight != null || videoHeight != 0) {
-        constraints.video.height = videoHeight;
+      var constraints = {
+        audio: true,
+        video: {
+          width: { ideal: videoWidth, max: videoWidth },
+          height: { ideal: videoHeight, max: videoHeight }
+        }
       }
 
-      const localStream = await navigator.mediaDevices.getUserMedia(constraints);
+      // const constraints = {
+      //   video: { deviceId: videoSource ? { exact: videoSource } : undefined },
+      //   audio: { deviceId: audioSource ? { exact: audioSource } : undefined }
+      // };
+
+      // if (videoWidth != null || videoWidth != 0) {
+      //   constraints.video.width = videoWidth;
+      // }
+      // if (videoHeight != null || videoHeight != 0) {
+      //   constraints.video.height = videoHeight;
+      // }
+
+      const localStream = await navigator.mediaDevices.getDisplayMedia(constraints);
       this.localVideo.srcObject = localStream;
       await this.localVideo.play();
     } catch (err) {
